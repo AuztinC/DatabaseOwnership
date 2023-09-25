@@ -1,5 +1,5 @@
 const pg = require('pg');
-const client = new pg.Client('postgres://localhost/thing_tracker');
+const client = new pg.Client(process.env.DATABASE_URL || 'postgres://localhost/thing_tracker');
 const express = require('express');
 const app = express();
 const path = require('path');
