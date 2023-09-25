@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { useEffect, useState } from 'react';
 import axios from 'axios'
+import Users from './Users'
+import Things from './Things';
 
 const App = ()=> {
   const [users, setUsers] = useState([])
@@ -36,55 +38,8 @@ const App = ()=> {
   return (<>
     <h1>thing_tracker</h1>
     <main>
-      <div>
-        <h2>Users ({ users.length })</h2>
-        <ul>
-          {
-            users.map((user)=>{
-              const usersThings = things.filter(thing=> thing.user_id === user.id)
-              return (
-                <li key={user.id}>
-                  {user.name}
-                  ({ usersThings.length })
-                  </li>
-              )
-            })
-          }
-        </ul>
-      </div>
-      <div>
-        <h2>Things ({ things.length })</h2>
-        <ul>
-          {
-            things.map((thing)=>{
-              return (
-                <li key={thing.id}>
-                  {thing.name}
-                  <ul>
-                    {
-                      users.map(user=>{
-                        return (
-                          <li key={user.id} className={ thing.user_id === user.id ? "owner" : ""}>
-                            { user.name }
-                            {
-                              thing.user_id === user.id ? (
-                                <button onClick={()=>removeOwner(thing)}>Remove</button>
-                              ) : (
-                                <button onClick={()=> addOwner(thing, user)}>Add</button>
-                              )
-
-                            }
-                          </li>
-                        )
-                      })
-                    }
-                  </ul>
-                  </li>
-              )
-            })
-          }
-        </ul>
-      </div>
+      <Users things={things} users={users} />
+      <Things things={things} users={users} addOwner={addOwner} removeOwner={removeOwner}/>
     </main>
   </>);
 };
